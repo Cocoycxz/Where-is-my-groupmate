@@ -1,5 +1,5 @@
 window.AppData = {
-  user: { name: "Alex Rivera", initials: "AR" },
+  user: { name: "Raphael Perote", initials: "AR" },
   projects: [
     {
       id: 1,

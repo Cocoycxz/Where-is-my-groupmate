@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Project monitoring · WIMG</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/tasks.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="dashboard.html"
+          >◉ <span>Where Is My</span> Groupmate?</a
+        >
+        <nav>
+          <a href="dashboard.html">⌂ Dashboard</a
+          ><a href="projects.html">▣ Projects</a
+          ><a href="project-monitoring.html">◔ Project monitoring</a
+          ><a href="student-performance.html">★ Student performance</a
+          ><a href="evaluations.html">✓ Evaluations</a>
+        </nav>
+      </aside>
+      <main class="app-main">
+        <header class="topbar">
+          <div>
+            <h1>Project monitoring</h1>
+            <p>Review progress across active groups.</p>
+          </div>
+        </header>
+        <table class="task-table">
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Course</th>
+              <th>Progress</th>
+              <th>Health</th>
+            </tr>
+          </thead>
+          <tbody id="monitoring-list"></tbody>
+        </table>
+      </main>
+    </div>
+    <script src="../js/data.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/instructor.js"></script>
+  </body>
+</html>

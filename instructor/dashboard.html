@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Instructor dashboard · WIMG</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="dashboard.html"
+          >◉ <span>Where Is My</span> Groupmate?</a
+        >
+        <nav>
+          <a href="dashboard.html">⌂ Dashboard</a
+          ><a href="projects.html">▣ Projects</a
+          ><a href="project-monitoring.html">◔ Project monitoring</a
+          ><a href="student-performance.html">★ Student performance</a
+          ><a href="evaluations.html">✓ Evaluations</a>
+        </nav>
+        <span class="sidebar-footer">Instructor workspace</span>
+      </aside>
+      <main class="app-main">
+        <header class="topbar">
+          <div>
+            <h1>Instructor dashboard</h1>
+            <p>CS 401 · Capstone Seminar</p>
+          </div>
+          <a class="button button-primary" href="project-monitoring.html"
+            >Review projects</a
+          >
+        </header>
+        <section class="stats-grid">
+          <article class="stat-card">
+            <p>Active groups</p>
+            <b>12</b><small>Across 2 sections</small>
+          </article>
+          <article class="stat-card">
+            <p>On-track groups</p>
+            <b>9</b><small>75% of class</small>
+          </article>
+          <article class="stat-card">
+            <p>Needs attention</p>
+            <b>3</b><small>Review activity</small>
+          </article>
+          <article class="stat-card">
+            <p>Evaluations due</p>
+            <b>18</b><small>Due Sep 22</small>
+          </article>
+        </section>
+        <div class="content-grid">
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Groups needing attention</h2>
+              <a href="project-monitoring.html">View monitoring</a>
+            </div>
+            <div class="list-item">
+              <span class="dot"></span>
+              <p>
+                Sustainability Campaign<br /><small
+                  >Low activity · 2 members inactive</small
+                >
+              </p>
+            </div>
+            <div class="list-item">
+              <span class="dot"></span>
+              <p>
+                Campus Mobility Study<br /><small
+                  >Behind milestone by 4 days</small
+                >
+              </p>
+            </div>
+          </section>
+          <aside class="panel">
+            <h2 class="section-title">Class activity</h2>
+            <div class="list-item">
+              <span class="dot"></span>
+              <p>
+                24 tasks completed this week<br /><small
+                  >Updated 10 min ago</small
+                >
+              </p>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+    <script src="../js/data.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

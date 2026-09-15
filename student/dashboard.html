@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Dashboard · WIMG</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="dashboard.html"
+          >◉ <span>Where Is My</span> Groupmate?</a
+        >
+        <nav>
+          <a href="dashboard.html">⌂ Dashboard</a
+          ><a href="projects.html">▣ My projects</a
+          ><a href="tasks.html">✓ Tasks</a
+          ><a href="contributions.html">◔ Contributions</a
+          ><a href="peer-evaluation.html">★ Peer evaluation</a
+          ><a href="notifications.html">♢ Notifications</a
+          ><a href="profile.html">◉ Profile</a>
+        </nav>
+        <span class="sidebar-footer">Student workspace</span>
+      </aside>
+      <main class="app-main">
+        <header class="topbar">
+          <div>
+            <h1>Good morning, <span data-user-name>Alex</span></h1>
+            <p>Here’s what’s happening with your teams.</p>
+          </div>
+          <div class="topbar-actions">
+            <a class="icon-button" href="notifications.html"
+              >♢<span class="notification-count">2</span></a
+            ><a class="button button-primary" href="tasks.html">+ Add task</a>
+          </div>
+        </header>
+        <section id="dashboard-stats" class="stats-grid"></section>
+        <div class="content-grid">
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Focus project</h2>
+              <a href="projects.html">All projects</a>
+            </div>
+            <div id="focus-project"></div>
+            <div class="panel-header">
+              <h2>Upcoming tasks</h2>
+              <a href="tasks.html">View all</a>
+            </div>
+            <div class="list-item">
+              <span class="dot"></span>
+              <p>
+                Design survey draft<br /><small>Mia Cruz · Due tomorrow</small>
+              </p>
+            </div>
+            <div class="list-item">
+              <span class="dot"></span>
+              <p>
+                Analyze pilot data<br /><small>David Lim · Due Sep 19</small>
+              </p>
+            </div>
+          </section>
+          <aside class="panel">
+            <div class="panel-header"><h2>Recent activity</h2></div>
+            <div id="activity-list"></div>
+          </aside>
+        </div>
+      </main>
+    </div>
+    <script src="../js/data.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/dashboard.js"></script>
+  </body>
+</html>

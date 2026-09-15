@@ -1,0 +1,58 @@
+.task-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.task-toolbar select {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px;
+}
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.task-table th,
+.task-table td {
+  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+.task-table th {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: #fafbfe;
+}
+.task-table tr:last-child td {
+  border: 0;
+}
+.task-title {
+  font-weight: 700;
+}
+.task-modal {
+  width: min(100% - 30px, 480px);
+  border: 0;
+  border-radius: 14px;
+  padding: 0;
+  box-shadow: var(--shadow);
+}
+.task-modal::backdrop {
+  background: rgba(23, 27, 40, 0.5);
+}
+.modal-content {
+  padding: 25px;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}

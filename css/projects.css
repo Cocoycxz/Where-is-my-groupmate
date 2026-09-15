@@ -1,0 +1,84 @@
+.projects-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.project-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 22px;
+  border-radius: var(--radius);
+  transition: 0.2s;
+}
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.project-card h2 {
+  font-size: 18px;
+  margin: 12px 0 4px;
+}
+.project-card > p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.project-card .progress {
+  width: 100%;
+  margin: 12px 0 5px;
+}
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 23px;
+}
+.filter-bar input {
+  padding: 10px 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  width: 270px;
+}
+.detail-hero {
+  background: linear-gradient(120deg, #5b4de3, #8176e9);
+  color: white;
+  border-radius: var(--radius);
+  padding: 29px;
+  margin-bottom: 22px;
+}
+.detail-hero h2 {
+  margin: 4px 0;
+}
+.detail-hero p {
+  margin: 0;
+  opacity: 0.85;
+}
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 22px;
+}
+.team-member {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+.team-member .person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.team-member p {
+  margin: 0;
+  font-weight: 700;
+  font-size: 13px;
+}
+.team-member small {
+  color: var(--muted);
+}

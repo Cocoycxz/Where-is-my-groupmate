@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Create account · WIMG</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+  <body class="auth-page">
+    <a class="brand auth-brand" href="index.html"
+      >◉ <span>Where Is My</span> Groupmate?</a
+    >
+    <main class="auth-card">
+      <p class="eyebrow">START COLLABORATING</p>
+      <h1>Create your account</h1>
+      <form id="register-form" class="form-stack">
+        <label>Full name<input placeholder="Alex Rivera" required /></label
+        ><label
+          >University email<input
+            type="email"
+            placeholder="you@university.edu"
+            required /></label
+        ><label
+          >I am a<select>
+            <option>Student</option>
+            <option>Instructor</option>
+          </select></label
+        ><label
+          >Password<input
+            type="password"
+            placeholder="Create a password"
+            required /></label
+        ><button class="button button-primary" type="submit">
+          Create account
+        </button>
+      </form>
+      <p class="auth-switch">
+        Already have an account? <a href="login.html">Log in</a>
+      </p>
+      <p id="auth-message" class="form-message" aria-live="polite"></p>
+    </main>
+    <script src="js/auth.js"></script>
+  </body>
+</html>

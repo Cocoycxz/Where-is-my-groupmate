@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Peer evaluation · WIMG</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/contributions.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="dashboard.html"
+          >◉ <span>Where Is My</span> Groupmate?</a
+        >
+        <nav>
+          <a href="dashboard.html">⌂ Dashboard</a
+          ><a href="projects.html">▣ My projects</a
+          ><a href="tasks.html">✓ Tasks</a
+          ><a href="contributions.html">◔ Contributions</a
+          ><a href="peer-evaluation.html">★ Peer evaluation</a
+          ><a href="notifications.html">♢ Notifications</a
+          ><a href="profile.html">◉ Profile</a>
+        </nav>
+      </aside>
+      <main class="app-main">
+        <header class="topbar">
+          <div>
+            <h1>Peer evaluation</h1>
+            <p>Share constructive feedback for Capstone Research.</p>
+          </div>
+        </header>
+        <form id="evaluation-form">
+          <div class="evaluation-grid">
+            <article class="evaluation-card">
+              <h2>Jordan Santos</h2>
+              <p class="muted">Rate Jordan’s contribution this sprint.</p>
+              <div class="rating">
+                <button type="button">1</button><button type="button">2</button
+                ><button type="button">3</button><button type="button">4</button
+                ><button type="button">5</button>
+              </div>
+            </article>
+            <article class="evaluation-card">
+              <h2>Mia Cruz</h2>
+              <p class="muted">Rate Mia’s contribution this sprint.</p>
+              <div class="rating">
+                <button type="button">1</button><button type="button">2</button
+                ><button type="button">3</button><button type="button">4</button
+                ><button type="button">5</button>
+              </div>
+            </article>
+            <article class="evaluation-card">
+              <h2>David Lim</h2>
+              <p class="muted">Rate David’s contribution this sprint.</p>
+              <div class="rating">
+                <button type="button">1</button><button type="button">2</button
+                ><button type="button">3</button><button type="button">4</button
+                ><button type="button">5</button>
+              </div>
+            </article>
+          </div>
+          <p id="evaluation-message" class="form-message"></p>
+          <button class="button button-primary" type="submit">
+            Save evaluations
+          </button>
+        </form>
+      </main>
+    </div>
+    <script src="../js/data.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/evaluation.js"></script>
+  </body>
+</html>

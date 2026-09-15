@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tasks · WIMG</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/tasks.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="dashboard.html"
+          >◉ <span>Where Is My</span> Groupmate?</a
+        >
+        <nav>
+          <a href="dashboard.html">⌂ Dashboard</a
+          ><a href="projects.html">▣ My projects</a
+          ><a href="tasks.html">✓ Tasks</a
+          ><a href="contributions.html">◔ Contributions</a
+          ><a href="peer-evaluation.html">★ Peer evaluation</a
+          ><a href="notifications.html">♢ Notifications</a
+          ><a href="profile.html">◉ Profile</a>
+        </nav>
+      </aside>
+      <main class="app-main">
+        <header class="topbar">
+          <div>
+            <h1>Tasks</h1>
+            <p>Capstone Research · Group 3</p>
+          </div>
+          <button id="add-task" class="button button-primary">
+            + Add task
+          </button>
+        </header>
+        <div class="task-toolbar">
+          <div class="page-tabs">
+            <a class="active" href="#">All tasks</a><a href="#">Mine</a>
+          </div>
+          <select id="task-filter">
+            <option>All</option>
+            <option>In progress</option>
+            <option>Not started</option>
+            <option>Done</option>
+          </select>
+        </div>
+        <table class="task-table">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Assignee</th>
+              <th>Due date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="task-body"></tbody>
+        </table>
+        <dialog id="task-modal" class="task-modal">
+          <div class="modal-content">
+            <h2>Add a task</h2>
+            <form id="task-form" class="form-stack">
+              <label>Task title<input name="title" required /></label
+              ><label
+                >Assign to<select name="assignee">
+                  <option>Alex Rivera</option>
+                  <option>Jordan Santos</option>
+                  <option>Mia Cruz</option>
+                  <option>David Lim</option>
+                </select></label
+              >
+              <div class="modal-actions">
+                <button
+                  type="button"
+                  data-close-modal
+                  class="button button-ghost"
+                >
+                  Cancel</button
+                ><button class="button button-primary">Add task</button>
+              </div>
+            </form>
+          </div>
+        </dialog>
+      </main>
+    </div>
+    <script src="../js/data.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/tasks.js"></script>
+  </body>
+</html>

@@ -6,6 +6,9 @@
   --surface: #fff;
   --canvas: #f7f8fc;
   --line: #e6e8f0;
+  --control: #fff;
+  --control-line: #d9dce7;
+  --soft-surface: #f5f4ff;
   --success: #177a55;
   --warning: #af6b00;
   --danger: #bd4354;
@@ -27,6 +30,15 @@ body {
   background: var(--canvas);
   font-size: 15px;
   line-height: 1.5;
+}
+html,
+body,
+button,
+input,
+select,
+dialog {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 a {
   color: var(--primary);
@@ -87,6 +99,27 @@ select {
 .button-small {
   padding: 7px 11px;
   font-size: 13px;
+}
+.theme-toggle {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  background: var(--control);
+  color: var(--ink);
+  font-size: 17px;
+}
+.theme-toggle:hover {
+  border-color: var(--primary);
+}
+.auth-page > .theme-toggle {
+  position: fixed;
+  top: 24px;
+  right: 36px;
 }
 .landing {
   background: #fff;
@@ -326,4 +359,69 @@ footer {
   color: var(--success);
   font-size: 13px;
   font-weight: 700;
+}
+
+html[data-theme="dark"] {
+  --ink: #edf1f7;
+  --muted: #aeb8c8;
+  --surface: #202634;
+  --canvas: #111722;
+  --line: #364052;
+  --control: #202634;
+  --control-line: #4a566a;
+  --soft-surface: #27283d;
+  --shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
+}
+html[data-theme="dark"] body,
+html[data-theme="dark"] .landing {
+  background: var(--canvas);
+}
+html[data-theme="dark"] .site-header nav > a:not(.button),
+html[data-theme="dark"] .brand {
+  color: var(--ink);
+}
+html[data-theme="dark"] .button-ghost,
+html[data-theme="dark"] .hero-card,
+html[data-theme="dark"] .feature-card,
+html[data-theme="dark"] .auth-card,
+html[data-theme="dark"] .form-stack input,
+html[data-theme="dark"] .form-stack select,
+html[data-theme="dark"] .rating button,
+html[data-theme="dark"] .icon-button,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .panel,
+html[data-theme="dark"] .project-card,
+html[data-theme="dark"] .evaluation-card,
+html[data-theme="dark"] .task-table,
+html[data-theme="dark"] .task-toolbar select,
+html[data-theme="dark"] .filter-bar input,
+html[data-theme="dark"] .task-modal {
+  background: var(--surface);
+  color: var(--ink);
+}
+html[data-theme="dark"] .button-ghost {
+  border-color: var(--control-line);
+}
+html[data-theme="dark"] .auth-page {
+  background: linear-gradient(135deg, #171b2b, #111722);
+}
+html[data-theme="dark"] .activity {
+  background: var(--soft-surface);
+}
+html[data-theme="dark"] .progress {
+  background: #3a4252;
+}
+html[data-theme="dark"] .avatar-add,
+html[data-theme="dark"] .badge-neutral {
+  background: #343d4e;
+  color: var(--muted);
+}
+html[data-theme="dark"] .form-stack input,
+html[data-theme="dark"] .form-stack select,
+html[data-theme="dark"] .task-toolbar select,
+html[data-theme="dark"] .filter-bar input {
+  border-color: var(--control-line);
+}
+html[data-theme="dark"] .form-stack input::placeholder {
+  color: #8995a8;
 }

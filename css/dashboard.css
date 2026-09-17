@@ -69,6 +69,15 @@
   height: 38px;
   cursor: pointer;
 }
+html[data-theme="dark"] .sidebar {
+  background: #171b25;
+}
+html[data-theme="dark"] .icon-button {
+  color: var(--ink);
+}
+html[data-theme="dark"] .task-table th {
+  background: #293142;
+}
 .notification-count {
   position: absolute;
   right: -5px;

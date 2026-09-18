@@ -15,6 +15,7 @@
 .task-table {
   width: 100%;
   border-collapse: collapse;
+  border-spacing: 0;
   background: white;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -26,6 +27,9 @@
   padding: 14px 16px;
   border-bottom: 1px solid var(--line);
   font-size: 13px;
+}
+.task-table thead th {
+  border-bottom: 1px solid var(--line);
 }
 .task-table th {
   color: var(--muted);
@@ -39,6 +43,12 @@
 }
 .task-title {
   font-weight: 700;
+}
+.task-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  white-space: nowrap;
 }
 .task-modal {
   width: min(100% - 30px, 480px);

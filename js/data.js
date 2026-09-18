@@ -186,7 +186,12 @@ function seedData() {
     members: demoMembers,
     tasks: demoTasks,
     activities: demoTasks.slice(0, 3).map((task, index) => ({ id: `demo-activity-${index + 1}`, projectId, memberEmail: task.assignedTo, action: task.status === "Completed" ? "completed" : "created", taskId: task.id, taskTitle: task.title, timestamp: new Date(Date.now() - index * 3600000).toISOString() })),
-    notifications: [{ id: "demo-notification-1", text: "Your demo workspace is ready.", time: "Today", type: "info" }],
+    notifications: [
+      { id: "demo-notification-1", text: "Your demo workspace is ready.", time: "Today", type: "info" },
+      { id: "demo-notification-2", text: "Jordan updated the project proposal and left a note.", time: "Yesterday", type: "info" },
+      { id: "demo-notification-3", text: "Angela marked the UI design as completed.", time: "2 days ago", type: "success" },
+      { id: "demo-notification-4", text: "You have a task due tomorrow for the login page.", time: "3 days ago", type: "warning" },
+    ],
   };
   saveAll();
 }

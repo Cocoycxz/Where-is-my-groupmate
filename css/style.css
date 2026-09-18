@@ -216,7 +216,18 @@ textarea {
 }
 .member-row {
   justify-content: flex-start;
-  margin: 20px 0;
+  gap: 22px;
+  margin: 12px 0 28px;
+}
+.member-row > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+.member-row h2,
+.member-row p {
+  margin: 0;
 }
 .avatar,
 .avatar-add {

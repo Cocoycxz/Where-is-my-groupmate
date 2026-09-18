@@ -1,13 +1,16 @@
 .task-toolbar {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 20px;
 }
 .task-toolbar select {
+  align-self: center;
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 9px;
+  height: 40px;
+  padding: 0 9px;
 }
 .task-table {
   width: 100%;

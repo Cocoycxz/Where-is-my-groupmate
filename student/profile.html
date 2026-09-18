@@ -36,17 +36,20 @@
             <span
               class="avatar violet"
               style="width: 60px; height: 60px; font-size: 17px"
+              id="profile-initials"
               >AR</span
             >
             <div>
-              <h2>Alex Rivera</h2>
-              <p class="muted">alex.rivera@university.edu</p>
+              <h2 id="profile-name">Current user</h2>
+              <p id="profile-email" class="muted"></p>
             </div>
           </div>
-          <form class="form-stack">
-            <label>Display name<input value="Alex Rivera" /></label
-            ><label>Course / program<input value="BS Computer Science" /></label
-            ><button class="button button-primary" type="button">
+          <form id="profile-form" class="form-stack">
+            <label>Display name<input name="name" /></label
+            ><label>Email<input name="email" type="email" readonly /></label
+            ><label>Course / program<input name="course" /></label
+            ><p id="profile-message" class="form-message"></p
+            ><button class="button button-primary" type="submit">
               Save changes
             </button>
           </form>
@@ -55,5 +58,6 @@
     </div>
     <script src="../js/data.js"></script>
     <script src="../js/main.js"></script>
+    <script src="../js/profile.js"></script>
   </body>
 </html>

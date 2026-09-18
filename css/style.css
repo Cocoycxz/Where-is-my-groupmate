@@ -46,7 +46,8 @@ a {
 }
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 .site-header {
@@ -328,13 +329,15 @@ footer {
   font-size: 13px;
 }
 .form-stack input,
-.form-stack select {
+.form-stack select,
+.form-stack textarea {
   width: 100%;
   margin-top: 7px;
   padding: 11px;
   border: 1px solid #d9dce7;
   border-radius: 8px;
   background: white;
+  resize: vertical;
 }
 .form-options {
   font-size: 13px;
@@ -386,6 +389,7 @@ html[data-theme="dark"] .feature-card,
 html[data-theme="dark"] .auth-card,
 html[data-theme="dark"] .form-stack input,
 html[data-theme="dark"] .form-stack select,
+html[data-theme="dark"] .form-stack textarea,
 html[data-theme="dark"] .rating button,
 html[data-theme="dark"] .icon-button,
 html[data-theme="dark"] .stat-card,
@@ -418,6 +422,7 @@ html[data-theme="dark"] .badge-neutral {
 }
 html[data-theme="dark"] .form-stack input,
 html[data-theme="dark"] .form-stack select,
+html[data-theme="dark"] .form-stack textarea,
 html[data-theme="dark"] .task-toolbar select,
 html[data-theme="dark"] .filter-bar input {
   border-color: var(--control-line);

@@ -31,13 +31,15 @@
             <h1>My projects</h1>
             <p>Keep every group project on track.</p>
           </div>
-          <a class="button button-primary" href="project-details.html"
-            >+ New project</a
-          >
+          <div class="topbar-actions">
+            <a class="button button-primary" href="project-details.html?create=1"
+              >+ New project</a
+            >
+          </div>
         </header>
         <div class="filter-bar">
           <input placeholder="Search projects" /><span class="muted"
-            >2 active projects</span
+            id="project-count">0 active projects</span
           >
         </div>
         <section id="project-list" class="projects-layout"></section>

@@ -25,7 +25,9 @@ function addThemeToggle() {
     updateThemeToggle(toggle, nextTheme);
   });
 
-  const target = document.querySelector(".site-header nav, .topbar-actions, .topbar, .auth-page");
+  const target =
+    document.querySelector(".topbar-actions") ||
+    document.querySelector(".site-header nav, .topbar, .auth-page");
   if (!target) return;
   target.append(toggle);
   updateThemeToggle(toggle, document.documentElement.dataset.theme || "light");

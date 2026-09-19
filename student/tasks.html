@@ -29,11 +29,13 @@
         <header class="topbar">
           <div>
             <h1>Tasks</h1>
-            <p>Capstone Research · Group 3</p>
+            <p id="tasks-project-label">Project tasks</p>
           </div>
-          <button id="add-task" class="button button-primary">
-            + Add task
-          </button>
+          <div class="topbar-actions">
+            <button id="add-task" class="button button-primary">
+              + Add task
+            </button>
+          </div>
         </header>
         <div class="task-toolbar">
           <div class="page-tabs">
@@ -41,9 +43,9 @@
           </div>
           <select id="task-filter">
             <option>All</option>
-            <option>In progress</option>
-            <option>Not started</option>
-            <option>Done</option>
+            <option>To Do</option>
+            <option>In Progress</option>
+            <option>Completed</option>
           </select>
         </div>
         <table class="task-table">
@@ -53,6 +55,7 @@
               <th>Assignee</th>
               <th>Due date</th>
               <th>Status</th>
+              <th></th>
             </tr>
           </thead>
           <tbody id="task-body"></tbody>
@@ -61,15 +64,17 @@
           <div class="modal-content">
             <h2>Add a task</h2>
             <form id="task-form" class="form-stack">
-              <label>Task title<input name="title" required /></label
-              ><label
-                >Assign to<select name="assignee">
-                  <option>Alex Rivera</option>
-                  <option>Jordan Santos</option>
-                  <option>Mia Cruz</option>
-                  <option>David Lim</option>
-                </select></label
-              >
+              <label>Task title<input name="title" required /></label>
+              <label>Description<textarea name="description" rows="3"></textarea></label>
+              <label>Project<select name="projectId" required></select></label>
+              <label>Assign to<select name="assignedTo" required></select></label>
+              <label>Deadline<input name="deadline" type="date" required /></label>
+              <label>Status<select name="status" required>
+                <option>To Do</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+              </select></label>
+              <p id="task-form-message" class="form-message"></p>
               <div class="modal-actions">
                 <button
                   type="button"
@@ -77,7 +82,7 @@
                   class="button button-ghost"
                 >
                   Cancel</button
-                ><button class="button button-primary">Add task</button>
+                ><button class="button button-primary" type="submit">Add task</button>
               </div>
             </form>
           </div>

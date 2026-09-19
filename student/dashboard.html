@@ -32,9 +32,14 @@
             <p>Here’s what’s happening with your teams.</p>
           </div>
           <div class="topbar-actions">
-            <a class="icon-button" href="notifications.html"
-              >♢<span class="notification-count">2</span></a
-            ><a class="button button-primary" href="tasks.html">+ Add task</a>
+            <a class="button button-primary" href="tasks.html">+ Add task</a
+            ><a
+              class="icon-button"
+              href="notifications.html"
+              aria-label="Notifications"
+              title="Notifications"
+              >🔔<span id="notification-count" class="notification-count">0</span></a
+            >
           </div>
         </header>
         <section id="dashboard-stats" class="stats-grid"></section>
@@ -49,18 +54,7 @@
               <h2>Upcoming tasks</h2>
               <a href="tasks.html">View all</a>
             </div>
-            <div class="list-item">
-              <span class="dot"></span>
-              <p>
-                Design survey draft<br /><small>Mia Cruz · Due tomorrow</small>
-              </p>
-            </div>
-            <div class="list-item">
-              <span class="dot"></span>
-              <p>
-                Analyze pilot data<br /><small>David Lim · Due Sep 19</small>
-              </p>
-            </div>
+            <div id="upcoming-tasks"></div>
           </section>
           <aside class="panel">
             <div class="panel-header"><h2>Recent activity</h2></div>

@@ -46,7 +46,8 @@ a {
 }
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 .site-header {
@@ -175,10 +176,13 @@ select {
 }
 .badge {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 999px;
   padding: 3px 9px;
   font-weight: 700;
   font-size: 12px;
+  white-space: nowrap;
 }
 .badge-success {
   background: #e4f7ed;
@@ -215,7 +219,18 @@ select {
 }
 .member-row {
   justify-content: flex-start;
-  margin: 20px 0;
+  gap: 22px;
+  margin: 12px 0 28px;
+}
+.member-row > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+.member-row h2,
+.member-row p {
+  margin: 0;
 }
 .avatar,
 .avatar-add {
@@ -328,13 +343,15 @@ footer {
   font-size: 13px;
 }
 .form-stack input,
-.form-stack select {
+.form-stack select,
+.form-stack textarea {
   width: 100%;
   margin-top: 7px;
   padding: 11px;
   border: 1px solid #d9dce7;
   border-radius: 8px;
   background: white;
+  resize: vertical;
 }
 .form-options {
   font-size: 13px;
@@ -386,6 +403,7 @@ html[data-theme="dark"] .feature-card,
 html[data-theme="dark"] .auth-card,
 html[data-theme="dark"] .form-stack input,
 html[data-theme="dark"] .form-stack select,
+html[data-theme="dark"] .form-stack textarea,
 html[data-theme="dark"] .rating button,
 html[data-theme="dark"] .icon-button,
 html[data-theme="dark"] .stat-card,
@@ -418,6 +436,7 @@ html[data-theme="dark"] .badge-neutral {
 }
 html[data-theme="dark"] .form-stack input,
 html[data-theme="dark"] .form-stack select,
+html[data-theme="dark"] .form-stack textarea,
 html[data-theme="dark"] .task-toolbar select,
 html[data-theme="dark"] .filter-bar input {
   border-color: var(--control-line);

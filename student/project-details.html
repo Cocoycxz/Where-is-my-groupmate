@@ -31,8 +31,27 @@
             <a href="projects.html">← Back to projects</a>
             <h1>Project details</h1>
           </div>
-          <a class="button button-primary" href="tasks.html">View tasks</a>
+          <div class="topbar-actions">
+            <a class="button button-primary" href="tasks.html">View tasks</a>
+          </div>
         </header>
+        <section id="project-form-panel" class="panel">
+          <div class="panel-header">
+            <h2 id="project-form-title">Create project</h2>
+          </div>
+          <form id="project-form" class="form-stack">
+            <label>Project name<input name="name" required /></label>
+            <label>Description<textarea name="description" rows="4"></textarea></label>
+            <label>Deadline<input name="deadline" type="date" required /></label>
+            <label>Status<select name="status" required>
+              <option>Planning</option>
+              <option>In Progress</option>
+              <option>On Hold</option>
+            </select></label>
+            <p id="project-form-message" class="form-message"></p>
+            <button class="button button-primary" type="submit">Save project</button>
+          </form>
+        </section>
         <div id="project-details"></div>
       </main>
     </div>

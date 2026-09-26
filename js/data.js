@@ -151,13 +151,23 @@ function advanceTaskProgress(taskId) {
   const currentTask = AppData.tasks.find((task) => task.id === taskId);
   if (!currentTask) return null;
   if (!AppData.user?.email || currentTask.assignedTo !== AppData.user.email) return null;
-  const nextStatus = currentTask.status === "To Do" ? "In Progress" : "Completed";
-  const updatedTask = { ...currentTask, status: nextStatus, updatedAt: new Date().toISOString() };
+  if (currentTask.status !== "To Do") return null;
+  const updatedTask = { ...currentTask, status: "In Progress", updatedAt: new Date().toISOString() };
   const index = AppData.tasks.findIndex((task) => task.id === taskId);
   if (index >= 0) AppData.tasks[index] = updatedTask;
   saveAll();
   addActivity({ projectId: updatedTask.projectId, memberEmail: updatedTask.assignedTo, action: "updated", taskId: updatedTask.id, taskTitle: updatedTask.title });
-  if (updatedTask.status === "Completed") addActivity({ projectId: updatedTask.projectId, memberEmail: updatedTask.assignedTo, action: "completed", taskId: updatedTask.id, taskTitle: updatedTask.title });
+  return updatedTask;
+}
+
+function submitTask(taskId) {
+  const currentTask = AppData.tasks.find((task) => task.id === taskId);
+  if (!currentTask || !AppData.user?.email || currentTask.assignedTo !== AppData.user.email || currentTask.status !== "In Progress") return null;
+  const updatedTask = { ...currentTask, status: "Completed", submittedAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+  const index = AppData.tasks.findIndex((task) => task.id === taskId);
+  if (index >= 0) AppData.tasks[index] = updatedTask;
+  saveAll();
+  addActivity({ projectId: updatedTask.projectId, memberEmail: updatedTask.assignedTo, action: "completed", taskId: updatedTask.id, taskTitle: updatedTask.title });
   return updatedTask;
 }
 
@@ -171,6 +181,69 @@ function deleteTask(taskId) {
 
 let AppData = { user: {}, projects: [], members: [], tasks: [], activities: [], notifications: [] };
 
+const memberIdentityChanges = {
+  "jordan.santos.demo@gmail.com": "joshua.guevarra@gmail.com",
+  "angela.cruz.demo@gmail.com": "kyle.liagao@gmail.com",
+  "miguel.reyes.demo@gmail.com": "paul.matthew@gmail.com",
+};
+
+const memberDisplayNameChanges = {
+  "Jordan Santos": "joshua.guevarra@gmail.com",
+  "Angela Cruz": "kyle.liagao@gmail.com",
+  "Miguel Reyes": "paul.matthew@gmail.com",
+};
+
+function migrateMemberIdentities() {
+  let changed = false;
+  const updateEmail = (email) => memberIdentityChanges[email] || email;
+
+  AppData.members = AppData.members.map((member) => {
+    const email = updateEmail(member.email);
+    if (email === member.email) return member;
+    changed = true;
+    return { ...member, email, name: email, initials: initialsFor(email) };
+  });
+  AppData.tasks = AppData.tasks.map((task) => {
+    const assignedTo = updateEmail(task.assignedTo);
+    if (assignedTo === task.assignedTo) return task;
+    changed = true;
+    return { ...task, assignedTo };
+  });
+  AppData.activities = AppData.activities.map((activity) => {
+    const memberEmail = updateEmail(activity.memberEmail);
+    if (memberEmail === activity.memberEmail) return activity;
+    changed = true;
+    return { ...activity, memberEmail };
+  });
+  AppData.notifications = AppData.notifications.map((notification) => {
+    if (typeof notification.text !== "string") return notification;
+    let text = notification.text;
+    Object.entries(memberDisplayNameChanges).forEach(([oldName, newName]) => {
+      text = text.replaceAll(oldName, newName);
+    });
+    Object.entries(memberIdentityChanges).forEach(([oldEmail, newEmail]) => {
+      text = text.replaceAll(oldEmail, newEmail);
+    });
+    if (text === notification.text) return notification;
+    changed = true;
+    return { ...notification, text };
+  });
+
+  const userEmail = updateEmail(AppData.user?.email);
+  if (userEmail !== AppData.user?.email) {
+    AppData.user = { ...AppData.user, email: userEmail, name: userEmail, initials: initialsFor(userEmail) };
+    changed = true;
+  }
+
+  if (changed) {
+    writeStorage(storageKeys.members, AppData.members);
+    writeStorage(storageKeys.tasks, AppData.tasks);
+    writeStorage(storageKeys.activities, AppData.activities);
+    writeStorage(storageKeys.notifications, AppData.notifications);
+    writeStorage(storageKeys.currentUser, AppData.user);
+  }
+}
+
 function seedData() {
   if (localStorage.getItem(storageKeys.projects) !== null) {
     AppData.projects = readStorage(storageKeys.projects, []);
@@ -179,31 +252,32 @@ function seedData() {
     AppData.activities = readStorage(storageKeys.activities, []);
     AppData.notifications = readStorage(storageKeys.notifications, []);
     AppData.user = readStorage(storageKeys.currentUser, { name: "Raphael Perote", email: "raphael.demo@gmail.com", initials: "RP", course: "BS Computer Science" });
+    migrateMemberIdentities();
     return;
   }
   const projectId = "demo-project";
   const secondProjectId = "demo-project-cc6";
   const demoMembers = [
-    ["jordan.santos.demo@gmail.com", "Jordan Santos", "Writer", "blue", "Working"],
-    ["angela.cruz.demo@gmail.com", "Angela Cruz", "Designer", "orange", "Active"],
-    ["miguel.reyes.demo@gmail.com", "Miguel Reyes", "Researcher", "green", "Away"],
+    ["joshua.guevarra@gmail.com", "joshua.guevarra@gmail.com", "Writer", "blue", "Working"],
+    ["kyle.liagao@gmail.com", "kyle.liagao@gmail.com", "Designer", "orange", "Active"],
+    ["paul.matthew@gmail.com", "paul.matthew@gmail.com", "Researcher", "green", "Away"],
   ].map(([email, name, role, color, status], index) => ({ id: `demo-member-${index + 1}`, email, name, initials: initialsFor(name), role, score: [92, 68, 54][index], color, status, projectId }));
   const demoMembersCc6 = [
     ["raphael.demo@gmail.com", "Raphael Perote", "Developer", "purple", "Working"],
-    ["jordan.santos.demo@gmail.com", "Jordan Santos", "Researcher", "blue", "Active"],
-    ["miguel.reyes.demo@gmail.com", "Miguel Reyes", "Editor", "green", "Away"],
+    ["joshua.guevarra@gmail.com", "joshua.guevarra@gmail.com", "Researcher", "blue", "Active"],
+    ["paul.matthew@gmail.com", "paul.matthew@gmail.com", "Editor", "green", "Away"],
   ].map(([email, name, role, color, status], index) => ({ id: `demo-member-cc6-${index + 1}`, email, name, initials: initialsFor(name), role, score: [46, 38, 25][index], color, status, projectId: secondProjectId }));
   const demoTasks = [
-    ["Create project proposal", "jordan.santos.demo@gmail.com", "2026-09-25", "Completed"],
-    ["Design UI", "angela.cruz.demo@gmail.com", "2026-09-28", "Completed"],
-    ["Build login page", "angela.cruz.demo@gmail.com", "2026-10-03", "In Progress"],
-    ["Database research", "miguel.reyes.demo@gmail.com", "2026-10-07", "Completed"],
-    ["Prepare presentation", "jordan.santos.demo@gmail.com", "2026-10-15", "To Do"],
+    ["Create project proposal", "joshua.guevarra@gmail.com", "2026-09-25", "Completed"],
+    ["Design UI", "kyle.liagao@gmail.com", "2026-09-28", "Completed"],
+    ["Build login page", "kyle.liagao@gmail.com", "2026-10-03", "In Progress"],
+    ["Database research", "paul.matthew@gmail.com", "2026-10-07", "Completed"],
+    ["Prepare presentation", "joshua.guevarra@gmail.com", "2026-10-15", "To Do"],
   ].map(([title, assignedTo, deadline, status], index) => ({ id: `demo-task-${index + 1}`, projectId, title, description: "Demo task", assignedTo, deadline, status, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }));
   const demoTasksCc6 = [
     ["Research", "raphael.demo@gmail.com", "2026-10-05", "In Progress"],
-    ["Write case study", "jordan.santos.demo@gmail.com", "2026-10-09", "To Do"],
-    ["Compile findings", "miguel.reyes.demo@gmail.com", "2026-10-12", "Completed"],
+    ["Write case study", "joshua.guevarra@gmail.com", "2026-10-09", "To Do"],
+    ["Compile findings", "paul.matthew@gmail.com", "2026-10-12", "Completed"],
   ].map(([title, assignedTo, deadline, status], index) => ({ id: `demo-task-cc6-${index + 1}`, projectId: secondProjectId, title, description: "CC6 case study task", assignedTo, deadline, status, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }));
   AppData = {
     user: { name: "Raphael Perote", email: "raphael.demo@gmail.com", initials: "RP", course: "BS Computer Science" },
@@ -216,8 +290,8 @@ function seedData() {
     activities: [...demoTasks.slice(0, 3).map((task, index) => ({ id: `demo-activity-${index + 1}`, projectId, memberEmail: task.assignedTo, action: task.status === "Completed" ? "completed" : "created", taskId: task.id, taskTitle: task.title, timestamp: new Date(Date.now() - index * 3600000).toISOString() })), ...demoTasksCc6.slice(0, 3).map((task, index) => ({ id: `demo-activity-cc6-${index + 1}`, projectId: secondProjectId, memberEmail: task.assignedTo, action: task.status === "Completed" ? "completed" : "created", taskId: task.id, taskTitle: task.title, timestamp: new Date(Date.now() - (index + 3) * 3600000).toISOString() }))],
     notifications: [
       { id: "demo-notification-1", text: "Your demo workspace is ready.", time: "Today", type: "info" },
-      { id: "demo-notification-2", text: "Jordan updated the project proposal and left a note.", time: "Yesterday", type: "info" },
-      { id: "demo-notification-3", text: "Angela marked the UI design as completed.", time: "2 days ago", type: "success" },
+      { id: "demo-notification-2", text: "joshua.guevarra@gmail.com updated the project proposal and left a note.", time: "Yesterday", type: "info" },
+      { id: "demo-notification-3", text: "kyle.liagao@gmail.com marked the UI design as completed.", time: "2 days ago", type: "success" },
       { id: "demo-notification-4", text: "You have a task due tomorrow for the login page.", time: "3 days ago", type: "warning" },
     ],
   };

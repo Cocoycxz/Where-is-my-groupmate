@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const displayScore = (member, index, project) => {
     if (project && project.name === "CC6 Case Study") {
       const cc6Scores = {
-        "jordan.santos.demo@gmail.com": 32,
-        "angela.cruz.demo@gmail.com": 24,
-        "miguel.reyes.demo@gmail.com": 11,
+        "joshua.guevarra@gmail.com": 32,
+        "kyle.liagao@gmail.com": 24,
+        "paul.matthew@gmail.com": 11,
       };
       if (cc6Scores[member.email] !== undefined) return cc6Scores[member.email];
     }

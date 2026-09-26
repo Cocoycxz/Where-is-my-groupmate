@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const projectSelect = form?.elements.projectId;
   const assigneeSelect = form?.elements.assignedTo;
+  const assignToMeButton = document.querySelector("#assign-to-me");
   const state = { view: "all", projectId: "all" };
 
   const currentUserEmail = () => AppData.user?.email || "";
@@ -51,12 +52,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const fillAssignees = () => {
     if (!assigneeSelect || !projectSelect) return;
     const members = AppData.members.filter((member) => member.projectId === projectSelect.value);
-    assigneeSelect.innerHTML = members.length
-      ? members.map((member) => `<option value="${escapeHtml(member.email)}">${escapeHtml(member.email)}</option>`).join("")
-      : '<option value="">No groupmates added yet</option>';
+    const options = members.map((member) => `<option value="${escapeHtml(member.email)}">${escapeHtml(member.email)}</option>`);
+    const userEmail = currentUserEmail();
+    if (userEmail && !members.some((member) => member.email === userEmail)) {
+      options.unshift(`<option value="${escapeHtml(userEmail)}">${escapeHtml(AppData.user.name || userEmail)} (me)</option>`);
+    }
+    if (editingTask?.assignedTo && !members.some((member) => member.email === editingTask.assignedTo) && editingTask.assignedTo !== userEmail) {
+      options.push(`<option value="${escapeHtml(editingTask.assignedTo)}">${escapeHtml(editingTask.assignedTo)}</option>`);
+    }
+    assigneeSelect.innerHTML = options.join("") || '<option value="">No groupmates added yet</option>';
     if (editingTask) {
       assigneeSelect.value = editingTask.assignedTo || "";
     }
+    updateAssignToMeButton();
+  };
+
+  const updateAssignToMeButton = () => {
+    if (!assignToMeButton) return;
+    const assignedToMe = Boolean(currentUserEmail()) && assigneeSelect?.value === currentUserEmail();
+    assignToMeButton.textContent = assignedToMe ? "Assigned to Me" : "Assign to Me";
+    assignToMeButton.disabled = assignedToMe;
   };
 
   const getVisibleTasks = () => AppData.tasks.filter((task) => {
@@ -70,19 +85,22 @@ document.addEventListener("DOMContentLoaded", () => {
     return selectedStatus === "All" || task.status === selectedStatus;
   });
 
-  const getProgressButtonLabel = (status) => {
-    if (status === "To Do") return "Update progress";
-    if (status === "In Progress") return "Mark as completed";
-    return "Completed";
-  };
-
   const taskRow = (task) => {
-    const isMineTask = state.view === "mine" && task.assignedTo === currentUserEmail();
-    const actionButtons = isMineTask
-      ? `<button class="button button-ghost button-small update-task-progress" data-task-id="${escapeHtml(task.id)}" type="button">${getProgressButtonLabel(task.status)}</button>`
-      : "";
+    const isMineTask = Boolean(currentUserEmail()) && task.assignedTo === currentUserEmail();
+    const actionButtons = !isMineTask
+      ? ""
+      : task.status === "To Do"
+        ? `<button class="button button-ghost button-small update-task-progress" data-task-id="${escapeHtml(task.id)}" type="button">Start task</button>`
+        : task.status === "In Progress"
+          ? `<button class="button button-ghost button-small submit-task" data-task-id="${escapeHtml(task.id)}" type="button">Submit Task</button>`
+          : `<button class="button button-ghost button-small" type="button" disabled>Completed</button>`;
+    const assignee = AppData.user?.email === task.assignedTo
+      ? AppData.user
+      : AppData.members.find((member) => member.projectId === task.projectId && member.email === task.assignedTo);
+    const assigneeName = assignee?.name || task.assignedTo || "Unassigned";
+    const assigneeEmail = task.assignedTo && assigneeName !== task.assignedTo ? ` <small>(${escapeHtml(task.assignedTo)})</small>` : "";
 
-    return `<tr><td class="task-title">${escapeHtml(task.title)}${task.description ? `<small>${escapeHtml(task.description)}</small>` : ""}</td><td>${escapeHtml(task.assignedTo || "Unassigned")}</td><td>${escapeHtml(formatDate(task.deadline))}</td><td><span class="badge ${statusClass(task.status)}">${escapeHtml(task.status)}</span></td><td class="task-actions">${actionButtons}<button class="button button-ghost button-small edit-task" data-task-id="${escapeHtml(task.id)}" type="button">Edit</button><button class="button button-ghost button-small delete-task" data-task-id="${escapeHtml(task.id)}" type="button">Delete</button></td></tr>`;
+    return `<tr><td class="task-title">${escapeHtml(task.title)}${task.description ? `<small>${escapeHtml(task.description)}</small>` : ""}</td><td>${escapeHtml(assigneeName)}${assigneeEmail}</td><td>${escapeHtml(formatDate(task.deadline))}</td><td><span class="badge ${statusClass(task.status)}">${escapeHtml(task.status)}</span></td><td class="task-actions">${actionButtons}<button class="button button-ghost button-small edit-task" data-task-id="${escapeHtml(task.id)}" type="button">Edit</button><button class="button button-ghost button-small delete-task" data-task-id="${escapeHtml(task.id)}" type="button">Delete</button></td></tr>`;
   };
 
   const draw = () => {
@@ -108,7 +126,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .filter((project) => state.projectId === "all" || project.id === state.projectId)
       .map((project) => {
         const projectTasks = visibleTasks.filter((task) => task.projectId === project.id);
-        const rows = [`<tr class="project-group-header"><td colspan="5"><strong>PROJECT: ${escapeHtml(project.name)}</strong></td></tr>`];
+        const progress = projectProgress(project.id);
+        const rows = [`<tr class="project-group-header"><td colspan="5"><strong>PROJECT: ${escapeHtml(project.name)}</strong><div class="progress"><i style="width:${progress}%"></i></div><small>${progress}% complete</small></td></tr>`];
         if (projectTasks.length) {
           rows.push(projectTasks.map(taskRow).join(""));
         } else {
@@ -133,6 +152,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!task) return;
       if (task.assignedTo !== currentUserEmail()) return;
       const updatedTask = advanceTaskProgress(task.id);
+      if (updatedTask) draw();
+    }));
+    body.querySelectorAll(".submit-task").forEach((button) => button.addEventListener("click", () => {
+      const task = AppData.tasks.find((item) => item.id === button.dataset.taskId);
+      if (!task || task.assignedTo !== currentUserEmail()) return;
+      const updatedTask = submitTask(task.id);
       if (updatedTask) draw();
     }));
 
@@ -175,6 +200,16 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   });
   projectSelect?.addEventListener("change", fillAssignees);
+  assigneeSelect?.addEventListener("change", updateAssignToMeButton);
+  assignToMeButton?.addEventListener("click", () => {
+    const userEmail = currentUserEmail();
+    if (!userEmail || !assigneeSelect) return;
+    if (![...assigneeSelect.options].some((option) => option.value === userEmail)) {
+      assigneeSelect.add(new Option(`${AppData.user.name || userEmail} (me)`, userEmail));
+    }
+    assigneeSelect.value = userEmail;
+    updateAssignToMeButton();
+  });
   document.querySelector("#add-task")?.addEventListener("click", () => openTask());
   document.querySelector("[data-close-modal]")?.addEventListener("click", () => modal.close());
   form?.addEventListener("submit", (event) => {

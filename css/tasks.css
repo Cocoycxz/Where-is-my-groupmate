@@ -57,6 +57,9 @@
   padding: 0;
   box-shadow: var(--shadow);
 }
+#assign-to-me {
+  margin-top: 7px;
+}
 .task-modal::backdrop {
   background: rgba(23, 27, 40, 0.5);
 }

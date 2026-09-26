@@ -1,3 +1,35 @@
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+#project-filter {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 190px;
+  padding: 9px 36px 9px 12px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--primary) 50%), linear-gradient(135deg, var(--primary) 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% - 2px), calc(100% - 12px) calc(50% - 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  box-shadow: 0 1px 2px rgba(24, 31, 55, 0.04);
+}
+
+#project-filter:focus {
+  outline: 2px solid rgba(91, 77, 227, 0.18);
+  border-color: var(--primary);
+}
+
 .contribution-list {
   display: grid;
   gap: 15px;
@@ -10,6 +42,22 @@
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 10px;
+  background: linear-gradient(180deg, var(--surface) 0%, var(--canvas) 100%);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+}
+
+html[data-theme="dark"] #project-filter {
+  border-color: var(--line);
+  background-color: var(--surface);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
+html[data-theme="dark"] .contribution-card {
+  background: linear-gradient(180deg, #212b3b 0%, #171d2a 100%);
+}
+
+html[data-theme="dark"] .contribution-score {
+  color: #b9c6ff;
 }
 .contribution-card h3 {
   margin: 0;

@@ -39,14 +39,19 @@
         </header>
         <div class="task-toolbar">
           <div class="page-tabs">
-            <a class="active" href="#">All tasks</a><a href="#">Mine</a>
+            <a class="active" href="#" data-view="all">All tasks</a><a href="#" data-view="mine">Mine</a>
           </div>
-          <select id="task-filter">
-            <option>All</option>
-            <option>To Do</option>
-            <option>In Progress</option>
-            <option>Completed</option>
-          </select>
+          <div class="task-controls">
+            <select id="project-filter" aria-label="Filter tasks by project">
+              <option value="all">All Projects</option>
+            </select>
+            <select id="task-filter" aria-label="Filter tasks by status">
+              <option>All</option>
+              <option>To Do</option>
+              <option>In Progress</option>
+              <option>Completed</option>
+            </select>
+          </div>
         </div>
         <table class="task-table">
           <thead>

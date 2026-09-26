@@ -147,6 +147,20 @@ function saveTask(taskInput, existingTask) {
   return task;
 }
 
+function advanceTaskProgress(taskId) {
+  const currentTask = AppData.tasks.find((task) => task.id === taskId);
+  if (!currentTask) return null;
+  if (!AppData.user?.email || currentTask.assignedTo !== AppData.user.email) return null;
+  const nextStatus = currentTask.status === "To Do" ? "In Progress" : "Completed";
+  const updatedTask = { ...currentTask, status: nextStatus, updatedAt: new Date().toISOString() };
+  const index = AppData.tasks.findIndex((task) => task.id === taskId);
+  if (index >= 0) AppData.tasks[index] = updatedTask;
+  saveAll();
+  addActivity({ projectId: updatedTask.projectId, memberEmail: updatedTask.assignedTo, action: "updated", taskId: updatedTask.id, taskTitle: updatedTask.title });
+  if (updatedTask.status === "Completed") addActivity({ projectId: updatedTask.projectId, memberEmail: updatedTask.assignedTo, action: "completed", taskId: updatedTask.id, taskTitle: updatedTask.title });
+  return updatedTask;
+}
+
 function deleteTask(taskId) {
   const task = AppData.tasks.find((item) => item.id === taskId);
   if (!task) return;
@@ -168,11 +182,17 @@ function seedData() {
     return;
   }
   const projectId = "demo-project";
+  const secondProjectId = "demo-project-cc6";
   const demoMembers = [
     ["jordan.santos.demo@gmail.com", "Jordan Santos", "Writer", "blue", "Working"],
     ["angela.cruz.demo@gmail.com", "Angela Cruz", "Designer", "orange", "Active"],
     ["miguel.reyes.demo@gmail.com", "Miguel Reyes", "Researcher", "green", "Away"],
-  ].map(([email, name, role, color, status], index) => ({ id: `demo-member-${index + 1}`, email, name, initials: initialsFor(name), role, score: 80 - index * 8, color, status, projectId }));
+  ].map(([email, name, role, color, status], index) => ({ id: `demo-member-${index + 1}`, email, name, initials: initialsFor(name), role, score: [92, 68, 54][index], color, status, projectId }));
+  const demoMembersCc6 = [
+    ["raphael.demo@gmail.com", "Raphael Perote", "Developer", "purple", "Working"],
+    ["jordan.santos.demo@gmail.com", "Jordan Santos", "Researcher", "blue", "Active"],
+    ["miguel.reyes.demo@gmail.com", "Miguel Reyes", "Editor", "green", "Away"],
+  ].map(([email, name, role, color, status], index) => ({ id: `demo-member-cc6-${index + 1}`, email, name, initials: initialsFor(name), role, score: [46, 38, 25][index], color, status, projectId: secondProjectId }));
   const demoTasks = [
     ["Create project proposal", "jordan.santos.demo@gmail.com", "2026-09-25", "Completed"],
     ["Design UI", "angela.cruz.demo@gmail.com", "2026-09-28", "Completed"],
@@ -180,12 +200,20 @@ function seedData() {
     ["Database research", "miguel.reyes.demo@gmail.com", "2026-10-07", "Completed"],
     ["Prepare presentation", "jordan.santos.demo@gmail.com", "2026-10-15", "To Do"],
   ].map(([title, assignedTo, deadline, status], index) => ({ id: `demo-task-${index + 1}`, projectId, title, description: "Demo task", assignedTo, deadline, status, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }));
+  const demoTasksCc6 = [
+    ["Research", "raphael.demo@gmail.com", "2026-10-05", "In Progress"],
+    ["Write case study", "jordan.santos.demo@gmail.com", "2026-10-09", "To Do"],
+    ["Compile findings", "miguel.reyes.demo@gmail.com", "2026-10-12", "Completed"],
+  ].map(([title, assignedTo, deadline, status], index) => ({ id: `demo-task-cc6-${index + 1}`, projectId: secondProjectId, title, description: "CC6 case study task", assignedTo, deadline, status, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }));
   AppData = {
     user: { name: "Raphael Perote", email: "raphael.demo@gmail.com", initials: "RP", course: "BS Computer Science" },
-    projects: [{ id: projectId, name: "Where Is My Groupmate?", description: "Student group project management system", deadline: "2026-10-20", status: "In Progress", course: "Student workspace", createdAt: new Date().toISOString() }],
-    members: demoMembers,
-    tasks: demoTasks,
-    activities: demoTasks.slice(0, 3).map((task, index) => ({ id: `demo-activity-${index + 1}`, projectId, memberEmail: task.assignedTo, action: task.status === "Completed" ? "completed" : "created", taskId: task.id, taskTitle: task.title, timestamp: new Date(Date.now() - index * 3600000).toISOString() })),
+    projects: [
+      { id: projectId, name: "Where Is My Groupmate?", description: "Student group project management system", deadline: "2026-10-20", status: "In Progress", course: "Student workspace", createdAt: new Date().toISOString() },
+      { id: secondProjectId, name: "CC6 Case Study", description: "Case study project for the CC6 course", deadline: "2026-10-16", status: "In Progress", course: "Student workspace", createdAt: new Date().toISOString() },
+    ],
+    members: [...demoMembers, ...demoMembersCc6],
+    tasks: [...demoTasks, ...demoTasksCc6],
+    activities: [...demoTasks.slice(0, 3).map((task, index) => ({ id: `demo-activity-${index + 1}`, projectId, memberEmail: task.assignedTo, action: task.status === "Completed" ? "completed" : "created", taskId: task.id, taskTitle: task.title, timestamp: new Date(Date.now() - index * 3600000).toISOString() })), ...demoTasksCc6.slice(0, 3).map((task, index) => ({ id: `demo-activity-cc6-${index + 1}`, projectId: secondProjectId, memberEmail: task.assignedTo, action: task.status === "Completed" ? "completed" : "created", taskId: task.id, taskTitle: task.title, timestamp: new Date(Date.now() - (index + 3) * 3600000).toISOString() }))],
     notifications: [
       { id: "demo-notification-1", text: "Your demo workspace is ready.", time: "Today", type: "info" },
       { id: "demo-notification-2", text: "Jordan updated the project proposal and left a note.", time: "Yesterday", type: "info" },

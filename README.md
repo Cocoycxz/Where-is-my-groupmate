@@ -6,6 +6,15 @@ A responsive, front-end prototype for student group-project coordination.
 
 Open `index.html` in a browser, then choose **Explore demo** or log in with any valid-looking email/password to enter the student workspace.
 
+## Smart Vehicle Management System (Java)
+
+Compile and run the standalone Java inheritance and interfaces demo from the repository root:
+
+```sh
+javac SmartVehicleManagementSystem.java
+java SmartVehicleManagementSystem
+```
+
 ## Structure
 
 - `student/` and `instructor/`: separate semantic HTML pages for each role.

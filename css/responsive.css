@@ -1,6 +1,11 @@
 @media (max-width: 1000px) {
-  .detail-grid {
+  .detail-grid,
+  .content-grid {
     grid-template-columns: 1fr;
+  }
+  .tasks .topbar,
+  .project-details .topbar {
+    align-items: flex-start;
   }
 }
 @media (max-width: 850px) {
@@ -8,33 +13,31 @@
     grid-template-columns: 1fr;
     padding-top: 42px;
   }
-  .hero h1 {
-    font-size: 42px;
-  }
   .hero-card {
     max-width: 450px;
   }
   .feature-grid,
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .app-shell {
     grid-template-columns: 1fr;
   }
   .sidebar {
-    padding: 13px;
-    position: sticky;
-    top: 0;
-    z-index: 2;
+    padding: 16px 12px 12px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
   .sidebar .brand {
     display: inline-block;
-    padding: 0;
+    padding: 0 6px 10px;
   }
   .sidebar nav {
     display: flex;
-    overflow: auto;
-    margin-top: 10px;
+    overflow-x: auto;
+    gap: 8px;
+    white-space: nowrap;
+    padding-bottom: 4px;
   }
   .sidebar nav a {
     white-space: nowrap;
@@ -43,10 +46,9 @@
     display: none;
   }
   .app-main {
-    padding: 25px 20px;
+    padding: 26px 20px 30px;
   }
-  .content-grid,
-  .detail-grid {
+  .projects-layout {
     grid-template-columns: 1fr;
   }
 }
@@ -58,10 +60,10 @@
     display: none;
   }
   .hero {
-    padding: 35px 20px;
+    padding: 34px 20px 48px;
   }
   .hero h1 {
-    font-size: 35px;
+    font-size: 2.5rem;
   }
   .hero-actions {
     flex-direction: column;
@@ -75,21 +77,22 @@
   }
   .auth-brand {
     position: static;
-    margin: 25px;
+    margin: 24px 24px 0;
   }
   .auth-page {
     display: block;
     padding-top: 1px;
   }
   .auth-card {
-    margin: 50px auto;
+    margin: 28px auto 42px;
   }
   .topbar {
+    flex-direction: column;
     align-items: flex-start;
     gap: 14px;
   }
   .topbar h1 {
-    font-size: 22px;
+    font-size: 1.9rem;
   }
   .topbar-actions .button {
     display: none;
@@ -98,23 +101,28 @@
     display: block;
     overflow-x: auto;
   }
-  .contribution-card {
-    grid-template-columns: 42px 1fr;
-  }
-  .contribution-score {
-    grid-column: 2;
-    text-align: left;
+  .filter-bar {
+    display: block;
   }
   .filter-bar input {
     width: 100%;
   }
-  .filter-bar {
-    display: block;
-  }
   .sidebar nav {
-    gap: 2px;
+    gap: 6px;
   }
   .app-main {
-    padding: 20px 14px;
+    padding: 20px 14px 24px;
+  }
+  .task-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .task-controls {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .task-controls select {
+    flex: 1;
+    min-width: 0;
   }
 }

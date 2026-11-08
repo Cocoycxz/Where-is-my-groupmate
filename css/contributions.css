@@ -59,6 +59,26 @@ html[data-theme="dark"] .contribution-card {
 html[data-theme="dark"] .contribution-score {
   color: #b9c6ff;
 }
+html[data-theme="dark"] .evaluation-card {
+  background: var(--surface) !important;
+  border-color: var(--line) !important;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
+}
+html[data-theme="dark"] .evaluation-card h2,
+html[data-theme="dark"] .evaluation-card p,
+html[data-theme="dark"] .evaluation-card .muted {
+  color: var(--ink) !important;
+}
+html[data-theme="dark"] .rating button {
+  background: var(--surface) !important;
+  border-color: var(--line) !important;
+  color: var(--ink) !important;
+}
+html[data-theme="dark"] .rating button.selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
 .contribution-card h3 {
   margin: 0;
   font-size: 14px;
@@ -102,4 +122,9 @@ html[data-theme="dark"] .contribution-score {
   background: var(--primary);
   color: white;
   border-color: var(--primary);
+}
+html[data-theme="dark"] .rating button.selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
 }

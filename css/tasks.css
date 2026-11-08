@@ -5,55 +5,83 @@
   gap: 12px;
   margin-bottom: 20px;
 }
+.task-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .task-toolbar select {
   align-self: center;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  height: 40px;
-  padding: 0 9px;
+  border-radius: 12px;
+  height: 42px;
+  padding: 0 12px;
+  background: var(--panel);
+  color: var(--ink);
+  min-width: 170px;
 }
 .task-table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-  background: white;
+  background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 22px;
   overflow: hidden;
+  box-shadow: 0 10px 18px rgba(19, 24, 33, 0.03);
 }
 .task-table th,
 .task-table td {
   text-align: left;
-  padding: 14px 16px;
+  padding: 15px 16px;
   border-bottom: 1px solid var(--line);
   font-size: 13px;
+  vertical-align: top;
 }
 .task-table thead th {
-  border-bottom: 1px solid var(--line);
-}
-.task-table th {
+  background: rgba(244, 239, 233, 0.7);
   color: var(--muted);
   font-size: 11px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: #fafbfe;
 }
 .task-table tr:last-child td {
-  border: 0;
+  border-bottom: 0;
 }
 .task-title {
-  font-weight: 700;
+  font-weight: 800;
+  color: var(--ink);
+}
+.task-title small,
+.task-table td small {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
 }
 .task-actions {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 8px;
   white-space: nowrap;
+  flex-wrap: wrap;
+}
+.project-group-header td {
+  background: rgba(243, 196, 107, 0.12);
+  color: var(--ink);
+  font-weight: 800;
+}
+.project-group-header strong {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+.project-group-header .progress {
+  margin: 8px 0 0;
 }
 .task-modal {
-  width: min(100% - 30px, 480px);
+  width: min(100% - 30px, 500px);
   border: 0;
-  border-radius: 14px;
+  border-radius: 24px;
   padding: 0;
   box-shadow: var(--shadow);
 }
@@ -61,14 +89,14 @@
   margin-top: 7px;
 }
 .task-modal::backdrop {
-  background: rgba(23, 27, 40, 0.5);
+  background: rgba(17, 24, 39, 0.52);
 }
 .modal-content {
-  padding: 25px;
+  padding: 28px 26px 22px;
 }
 .modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 20px;
+  margin-top: 18px;
 }
